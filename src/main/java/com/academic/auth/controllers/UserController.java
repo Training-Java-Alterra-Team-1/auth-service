@@ -11,6 +11,7 @@ import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,9 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/v1/user")
+@RequestMapping("/api/v1/")
 public class UserController {
     @Autowired
     private UserService userService;
@@ -69,7 +71,6 @@ public class UserController {
                 response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 
                 error.put("error", e.getMessage());
-                error.put("status", HttpStatus.FORBIDDEN.value());
 
                 new ObjectMapper().writeValue(response.getOutputStream(), error);
             }

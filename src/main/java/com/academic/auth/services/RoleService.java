@@ -39,14 +39,4 @@ public class RoleService {
 
         return ResponseEntity.status(HttpStatus.OK).headers(headers).body(resp);
     }
-
-    @SneakyThrows(Exception.class)
-    public ResponseEntity<Object> getRoleById(Long roleId){
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
-        Roles role = roleRepository.findRoleById(roleId);
-
-        return ResponseEntity.status(HttpStatus.OK).headers(headers).body(role);
-    }
 }

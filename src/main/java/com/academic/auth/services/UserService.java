@@ -1,6 +1,8 @@
 package com.academic.auth.services;
 
+import com.academic.auth.models.Roles;
 import com.academic.auth.models.Users;
+import com.academic.auth.repositories.RoleRepository;
 import com.academic.auth.repositories.UserRepository;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -30,13 +32,24 @@ public class UserService implements UserDetailsService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private RoleRepository roleRepository;
+
     @Override
     @SneakyThrows(UsernameNotFoundException.class)
     public UserDetails loadUserByUsername(String username) {
         val user = userRepository.findByUsername(username);
 
         if (Optional.ofNullable(user).isPresent()) {
+
+            log.info("username" + user.getUsername());
+            log.info("password" + user.getPassword());
+            log.info("role" + user.getRoleId());
+            Roles currentRole = roleRepository.findRoleById(user.getRoleId());
+
             Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
+            authorities.add(new SimpleGrantedAuthority(currentRole.getName()));
+
             return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
         } else {
             throw new UsernameNotFoundException("user " + username + " is not available in the database");
@@ -55,5 +68,13 @@ public class UserService implements UserDetailsService {
     @SneakyThrows(Exception.class)
     public Users getUser(String username) {
         return userRepository.findByUsername(username);
+    }
+
+    @SneakyThrows(Exception.class)
+    public void addRoleToUser(String username, String roleName) {
+        Users user = userRepository.findByUsername(username);
+        Roles role = roleRepository.findByName(roleName);
+
+        user.setRoleId(role.getId());
     }
 }

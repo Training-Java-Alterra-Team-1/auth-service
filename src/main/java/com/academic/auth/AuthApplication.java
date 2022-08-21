@@ -25,9 +25,13 @@ public class AuthApplication {
 //			roleService.addRole(new Roles(null, "ROLE_STUDENT"));
 //			roleService.addRole(new Roles(null, "ROLE_LECTURER"));
 //
-//			userService.addUser(new Users(null, "admin", "admin12321", new Long(1)));
-//			userService.addUser(new Users(null, "djodi", "djodi12321", new Long(2)));
-//			userService.addUser(new Users(null, "jalal", "jalal12321", new Long(3)));
+//			userService.addUser(new Users(null, "admin", "admin12321", null));
+//			userService.addUser(new Users(null, "djodi", "djodi12321", null ));
+//			userService.addUser(new Users(null, "jalal", "jalal12321", null ));
+//
+//			userService.addRoleToUser("admin", "ROLE_ADMIN");
+//			userService.addRoleToUser("djodi", "ROLE_STUDENT");
+//			userService.addRoleToUser("jalal", "ROLE_LECTURER");
 		};
 	}
 

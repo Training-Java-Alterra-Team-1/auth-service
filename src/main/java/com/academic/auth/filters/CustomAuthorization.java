@@ -35,7 +35,7 @@ public class CustomAuthorization extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
-        if (request.getServletPath().equals("/v2/auth/login")) {
+        if (request.getServletPath().equals("/api/v1/login") || request.getServletPath().equals("/api/v1/refresh-token")){
 
             filterChain.doFilter(request, response);
 
@@ -55,7 +55,7 @@ public class CustomAuthorization extends OncePerRequestFilter {
 
                     DecodedJWT decodedJWT = verifier.verify(token);
 
-                    String phone = decodedJWT.getSubject();
+                    String username = decodedJWT.getSubject();
 
                     String[] roles = decodedJWT.getClaim("roles").asArray(String.class);
 
@@ -66,14 +66,13 @@ public class CustomAuthorization extends OncePerRequestFilter {
                     });
 
                     UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                            phone, null, authorities);
+                            username, null, authorities);
 
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 
                     filterChain.doFilter(request, response);
 
                 } catch (Exception e) {
-
                     log.error("Error logging in {}", e.getMessage());
 
                     Map<String, Object> error = new HashMap<String, Object>();
