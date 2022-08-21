@@ -2,6 +2,7 @@ package com.academic.auth.services;
 
 import com.academic.auth.dto.RoleDto;
 import com.academic.auth.models.Roles;
+import com.academic.auth.models.Users;
 import com.academic.auth.repositories.RoleRepository;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,18 +23,11 @@ public class RoleService {
     private RoleRepository roleRepository;
 
     @SneakyThrows(Exception.class)
-    public ResponseEntity<Object> addRole(RoleDto request){
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
+    public Roles addRole(Roles role) {
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        role.setCreatedAt(currentDateTime);
 
-        Roles role = new Roles();
-        role.setName(request.getName());
-        LocalDateTime todayDateTime = LocalDateTime.now();
-        role.setCreatedAt(todayDateTime);
-
-        roleRepository.save(role);
-
-        return ResponseEntity.status(HttpStatus.OK).headers(headers).body(role);
+        return roleRepository.save(role);
     }
 
     @SneakyThrows(Exception.class)
