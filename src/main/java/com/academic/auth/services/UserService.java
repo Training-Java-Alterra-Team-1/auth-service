@@ -76,5 +76,7 @@ public class UserService implements UserDetailsService {
         Roles role = roleRepository.findByName(roleName);
 
         user.setRoleId(role.getId());
+
+        userRepository.save(user);
     }
 }
