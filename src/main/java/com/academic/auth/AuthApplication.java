@@ -1,17 +1,19 @@
 package com.academic.auth;
 
-import com.academic.auth.models.Roles;
-import com.academic.auth.models.Users;
 import com.academic.auth.services.RoleService;
 import com.academic.auth.services.UserService;
+import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootApplication
+@EnableEurekaClient
+@EnableEncryptableProperties
 public class AuthApplication {
 
 	public static void main(String[] args) {
