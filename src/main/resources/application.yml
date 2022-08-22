@@ -13,11 +13,17 @@ spring:
     livereload:
       enabled: true
   datasource:
-    url: jdbc:mysql://localhost:3306/academic_system?useUnicode=true&characterEncoding=utf8
-    username: root
-    password: ENC(AtWACilYZxmh2RXbeeEIHQxh6w4YfIZV)
+#    url: jdbc:mysql://localhost:3306/academic_system?useUnicode=true&characterEncoding=utf8
+#    username: root
+#    password: ENC(AtWACilYZxmh2RXbeeEIHQxh6w4YfIZV)
+    url: jdbc:mysql://db-student.caoaqarffybx.us-east-1.rds.amazonaws.com:3306/service-student?useUnicode=true&characterEncoding=utf8
+    username: admin
+    password: ENC(PySNLWU56Vo/TBhTt0cqvr/5K9fguKew)
     driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maxLifeTime: 600000
   jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     show-sql: true
     open-in-view: false
     hibernate:
