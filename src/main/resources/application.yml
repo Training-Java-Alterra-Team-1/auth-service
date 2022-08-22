@@ -1,11 +1,15 @@
 server:
   port: 8082
 spring:
+  mvc:
+    patchmatch:
+      matching-strategy: ANT_PATH_MATCHER
   profiles:
     active: native
   application:
     name: AUTH
   devtools:
+    add-properties: false
     livereload:
       enabled: true
   datasource:
