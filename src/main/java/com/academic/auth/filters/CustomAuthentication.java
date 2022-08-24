@@ -62,26 +62,29 @@ public class CustomAuthentication extends UsernamePasswordAuthenticationFilter {
         Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
 
         String accessToken = JWT.create().withSubject(user.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis() + 1 * 60 * 1000))
+                .withExpiresAt(new Date(System.currentTimeMillis() + 60 * 60 * 1000))
                 .withIssuer(request.getRequestURL().toString())
                 .withClaim("roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                 .sign(algorithm);
 
         String refreshToken = JWT.create().withSubject(user.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis() + 30 * 60 * 1000))
+                .withExpiresAt(new Date(System.currentTimeMillis() + 600 * 60 * 1000))
                 .withIssuer(request.getRequestURL().toString()).sign(algorithm);
 
         response.setHeader("accessToken", accessToken);
         response.setHeader("refreshToken", refreshToken);
 
         Map<String, Object> token = new HashMap<String, Object>();
+        Map<String, Object> data = new HashMap<String, Object>();
 
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 
         token.put("accessToken", accessToken);
         token.put("refreshToken", refreshToken);
+        data.put("data", token);
+        data.put("message", "Authenticated successfully!");
 
-        new ObjectMapper().writeValue(response.getOutputStream(), token);
+        new ObjectMapper().writeValue(response.getOutputStream(), data);
     }
 
     @Override
