@@ -81,6 +81,7 @@ public class CustomAuthorization extends OncePerRequestFilter {
                     response.setStatus(HttpStatus.FORBIDDEN.value());
                     response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 
+                    error.put("success", false);
                     error.put("error", e.getMessage());
 
                     new ObjectMapper().writeValue(response.getOutputStream(), error);
