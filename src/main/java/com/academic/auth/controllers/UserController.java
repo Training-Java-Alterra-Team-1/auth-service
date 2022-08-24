@@ -62,8 +62,9 @@ public class UserController {
 
                 token.put("accessToken", accessToken);
                 token.put("refreshToken", refreshToken);
+
+                data.put("success", true);
                 data.put("data", token);
-                data.put("message", "Authenticated successfully");
 
                 new ObjectMapper().writeValue(response.getOutputStream(), data);
 
@@ -75,8 +76,8 @@ public class UserController {
                 response.setStatus(HttpStatus.FORBIDDEN.value());
                 response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 
+                error.put("success", false);
                 error.put("error", e.getMessage());
-                error.put("message", "Authentication failed!");
 
                 new ObjectMapper().writeValue(response.getOutputStream(), error);
             }

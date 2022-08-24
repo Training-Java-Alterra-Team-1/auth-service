@@ -81,8 +81,8 @@ public class CustomAuthentication extends UsernamePasswordAuthenticationFilter {
 
         token.put("accessToken", accessToken);
         token.put("refreshToken", refreshToken);
+        data.put("success", true);
         data.put("data", token);
-        data.put("message", "Authenticated successfully!");
 
         new ObjectMapper().writeValue(response.getOutputStream(), data);
     }
@@ -94,7 +94,8 @@ public class CustomAuthentication extends UsernamePasswordAuthenticationFilter {
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
 
-        Map<String, String> error = new HashMap<String, String>();
+        Map<String, Object> error = new HashMap<String, Object>();
+        error.put("success", false);
         error.put("error", "Authentication failed!");
 
         new ObjectMapper().writeValue(response.getOutputStream(), error);
