@@ -56,13 +56,16 @@ public class UserController {
                         .sign(algorithm);
 
                 Map<String, Object> token = new HashMap<String, Object>();
+                Map<String, Object> data = new HashMap<String, Object>();
 
                 response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 
                 token.put("accessToken", accessToken);
                 token.put("refreshToken", refreshToken);
+                data.put("data", token);
+                data.put("message", "Authenticated successfully");
 
-                new ObjectMapper().writeValue(response.getOutputStream(), token);
+                new ObjectMapper().writeValue(response.getOutputStream(), data);
 
             } catch (Exception e) {
 
@@ -73,13 +76,14 @@ public class UserController {
                 response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 
                 error.put("error", e.getMessage());
+                error.put("message", "Authentication failed!");
 
                 new ObjectMapper().writeValue(response.getOutputStream(), error);
             }
 
         } else {
 
-            throw new RuntimeException("Refresh token is missing");
+            throw new RuntimeException("Refresh token is missing!");
 
         }
     }
