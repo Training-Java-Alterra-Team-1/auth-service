@@ -25,22 +25,22 @@ public class AuthApplication {
 		SpringApplication.run(AuthApplication.class, args);
 	}
 
-	@Bean
-	public CommandLineRunner run(InitialDataService initData){
-		return args ->{
-			initData.addRole(new Roles(null, "ROLE_ADMIN"));
-			initData.addRole(new Roles(null, "ROLE_STUDENT"));
-			initData.addRole(new Roles(null, "ROLE_LECTURER"));
-
-			initData.addUser(new Users(null, "admin", "admin12321", null));
-			initData.addUser(new Users(null, "djodi", "djodi12321", null ));
-			initData.addUser(new Users(null, "jalal", "jalal12321", null ));
-
-			initData.addRoleToUser("admin", "ROLE_ADMIN");
-			initData.addRoleToUser("djodi", "ROLE_STUDENT");
-			initData.addRoleToUser("jalal", "ROLE_LECTURER");
-		};
-	}
+//	@Bean
+//	public CommandLineRunner run(InitialDataService initData){
+//		return args ->{
+//			initData.addRole(new Roles(null, "ROLE_ADMIN"));
+//			initData.addRole(new Roles(null, "ROLE_STUDENT"));
+//			initData.addRole(new Roles(null, "ROLE_LECTURER"));
+//
+//			initData.addUser(new Users(null, "admin", "admin12321", null));
+//			initData.addUser(new Users(null, "djodi", "djodi12321", null ));
+//			initData.addUser(new Users(null, "jalal", "jalal12321", null ));
+//
+//			initData.addRoleToUser("admin", "ROLE_ADMIN");
+//			initData.addRoleToUser("djodi", "ROLE_STUDENT");
+//			initData.addRoleToUser("jalal", "ROLE_LECTURER");
+//		};
+//	}
 
 	@Bean
 	public PasswordEncoder passwordEncoder() {
